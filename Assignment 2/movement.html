@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
+    <script>
+      let theta = 0;
+      let phita = 0;
+      AFRAME.registerComponent("move", {
+        tick: function() {
+          theta += 0.01;
+          phita += 0.001;
+          let x = Math.sin(theta);
+          let y = Math.cos(theta);
+          let z = Math.tan(phita);
+          this.el.setAttribute("position", `${x} ${y} ${z}`);
+        }
+      });
+    </script>
+    <script>
+      let boxes = []
+      let t = 0
+      AFRAME.registerComponent('box-generate', {
+        init: function() {
+          for (let i = 0; i < 100; i++) {
+            let box = document.createElement('a-box')
+            box.setAttribute('color', 'red')
+            box.setAttribute('rotation', '0 45 0')
+            box.setAttribute('scale', '0.01 0.01 0.01')
+            box.setAttribute('position', `${Math.sin(i)} ${Math.cos(i)} ${Math.tan(i)}`)
+            this.el.sceneEl.appendChild(box)
+            boxes.push(box)
+          }
+        }
+        <!-- tick: function() {
+        <!--  for (let i = 0; i < 10; i++) {
+        <!--     let box = boxes[i]
+         <!--    t = t + 0.01
+        <!--     box.setAttribute('position', `${i * 0.2 * Math.sin(t)} 0 0`)
+        <!--   }
+         <!-- }
+      })
+
+    </script>
+  </head>
+  <body>
+    <a-scene box-generate background="color: #FAFAFA">
+      <a-box
+        move
+        position="0 0 -2"
+        rotation="0 45 0"
+        color="red"
+        shadow
+      ></a-box>
+      <a-camera position="0 -1 10"></a-camera>
+    </a-scene>
+  </body>
+</html>

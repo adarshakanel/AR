@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
+    <script>
+      AFRAME.registerComponent('click-event', {
+        init: function () {
+          this.el.addEventListener('click', event => {
+            let position = event.detail.intersection.point
+            console.log(position)
+            position.y+=0.1
+            let box = document.createElement('a-box')
+            let size = 0.2
+            box.setAttribute('scale', `${size} ${size} ${size}`)
+            box.setAttribute('color', 'red')
+            box.setAttribute('position', position)
+            this.el.sceneEl.appendChild(box)
+          });
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <a-scene background="color: #FAFAFA">
+      <a-plane color= "#FAFAFA" position="0 0 -4" rotation="-90 0 0" width="4" height="4"></a-plane>
+      <a-camera>
+        <a-cursor click-event></a-cursor>
+      </a-camera>
+    </a-scene>
+  </body>
+</html>

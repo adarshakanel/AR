@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
+    <a-gltf-model
+      gltf-model="https://cdn.glitch.com/57d95f19-ee70-4105-b352-137d2f71e397%2Fout.glb?v=1610683410685"
+    ></a-gltf-model>
+    <script>
+      AFRAME.registerComponent("click-event", {
+        init: function() {
+          this.el.addEventListener("click", event => {
+            let position = event.detail.intersection.point;
+            position.y += 0.8
+            console.log(position);
+            let pokemon = document.createElement("a-gltf-model");
+            pokemon.setAttribute(
+              "src",
+              "https://cdn.glitch.com/57d95f19-ee70-4105-b352-137d2f71e397%2Fout.glb?v=1610683410685"
+            );
+            pokemon.setAttribute("position", position);
+            pokemon.setAttribute("scale", '0.5 0.5 0.5');
+            this.el.sceneEl.appendChild(pokemon);
+          });
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <a-scene background="color: #FAFAFA">
+      <a-plane
+        color="green"
+        position="0 0 -4"
+        rotation="-90 0 0"
+        width="4"
+        height="4"
+      ></a-plane>
+      <a-camera>
+        <a-cursor click-event></a-cursor>
+      </a-camera>
+    </a-scene>
+  </body>
+</html>
